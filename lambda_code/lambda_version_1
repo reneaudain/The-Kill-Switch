@@ -1,0 +1,32 @@
+# Importing the boto3 library, which is the AWS SDK for Python.
+# It allows Python developers to write software that makes use of services like Amazon S3 and Amazon EC2.
+import boto3
+
+# Setting the AWS region that this script will operate in.
+region = 'us-east-1'
+
+# Defining the main handler function for the Lambda service.
+# The 'event' parameter is used to pass in event data to the handler.
+# The 'context' parameter provides information about the invocation, function, and execution environment.
+def lambda_handler(event, context):
+    # Creating an EC2 client. This client provides a high-level interface to interact with EC2.
+    ec2 = boto3.client('ec2', region_name=region)
+
+    # Initializing an empty list to store instance IDs.
+    instanceids = []
+
+    # Calling the describe_instances method to retrieve information about all EC2 instances.
+    response = ec2.describe_instances()
+
+    # Iterating over the response from the describe_instances call.
+    for reservations in response['Reservations']:
+        # Each reservation in the response contains information about EC2 instances.
+        for instance in reservations["Instances"]:
+            # Checking if the instance has any tags.
+            if "Tags" in instance:
+                # Iterating over the tags of the instance.
+                for tag in instance["Tags"]:
+                    # If a tag with the value 'Dev' is found, it will add the InstanceId to the variable 'instanceids'.                    
+                    if tag["Value"] == 'Dev':
+                        # Printing the instanceids list. 
+                        print(instanceids)
