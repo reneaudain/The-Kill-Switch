@@ -30,3 +30,5 @@ def lambda_handler(event, context):
                     if tag["Value"] == 'Dev':
                         # Printing the instanceids list. 
                         print(instanceids)
+    #shutting down described instances.
+    response = ec2.stop_instances(InstanceIds=instanceids)
