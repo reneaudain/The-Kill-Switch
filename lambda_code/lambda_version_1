@@ -29,6 +29,6 @@ def lambda_handler(event, context):
                     # If a tag with the value 'Dev' is found, it will add the InstanceId to the variable 'instanceids'.                    
                     if tag["Value"] == 'Dev':
                         # Printing the instanceids list. 
-                        print(instanceids)
+                        print(instanceids.append(instance['InstanceId']))
     #shutting down described instances.
     response = ec2.stop_instances(InstanceIds=instanceids)
